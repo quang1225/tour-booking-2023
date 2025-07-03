@@ -1,0 +1,72 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+generator typegraphql {
+  provider = "typegraphql-prisma"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                        Int           @id @default(autoincrement())
+  email                     String        @unique
+  password                  String?
+  fullname                  String?
+  avatar                    String?
+  createdAt                 DateTime      @default(now())
+  isActive                  Boolean       @default(true)
+  isAdmin                   Boolean       @default(false)
+  isEmailVerified           Boolean       @default(false)
+  savedList                 Tour[]
+  orders                    Order[]
+}
+
+model Category {
+  id                        Int           @id @default(autoincrement())
+  name                      String
+  description               String
+  createdAt                 DateTime      @default(now())
+  isActive                  Boolean       @default(true)
+  tours                     Tour[]        @relation
+}
+
+model Tour {
+  id                        Int           @id @default(autoincrement())
+  name                      String
+  description               String?       @db.Text
+  featuredImage             String
+  galleryImgs               String        @db.Text
+  duration                  String
+  createdAt                 DateTime      @default(now())
+  isActive                  Boolean       @default(true)
+  adultPrice                Decimal       @db.Decimal(10,2)
+  childPrice                Decimal       @db.Decimal(10,2)
+  infantPrice               Decimal       @db.Decimal(10,2)
+  categories                Category[]    @relation
+  users                     User[]        @relation
+  orders                    Order[]       @relation
+}
+
+model Order {
+  id                         String       @id
+  transactionId              String       @unique
+  startDate                  DateTime
+  numberOfAdults             Int
+  numberOfChilds             Int
+  numberOfInfants            Int
+  adultPrice                 Decimal       @db.Decimal(10,2)
+  childPrice                 Decimal       @db.Decimal(10,2)
+  infantPrice                Decimal       @db.Decimal(10,2)
+  status                     String        @default("PENDING")
+  createdAt                  DateTime      @default(now())
+  otherRequest               String?
+  paymentMethod              String
+  userEmail                  String
+  user                       User          @relation(fields: [userEmail], references: [email])
+  tourId                     Int
+  tour                       Tour                       @relation(fields: [tourId], references: [id])
+}

@@ -1,0 +1,36 @@
+const offlineOrders = [
+  {
+    id: 1,
+    startDate: '2023-09-02T08:06:35.063Z',
+    numberOfAdults: 1,
+    numberOfChilds: 1,
+    numberOfInfants: 2,
+    adultPrice: 100,
+    childPrice: 50,
+    infantPrice: 20,
+    status: 'waiting-for-payment',
+    createdAt: '2023-07-02T17:03:39.757Z',
+    otherRequest: 'ok 123',
+    paymentMethod: 'card',
+    userEmail: 'quang1@test.com',
+    tourId: 2,
+  },
+  {
+    id: 2,
+    startDate: '2023-08-25T08:06:35.063Z',
+    numberOfAdults: 3,
+    numberOfChilds: 2,
+    numberOfInfants: 0,
+    adultPrice: 100,
+    childPrice: 50,
+    infantPrice: 20,
+    status: 'paid',
+    createdAt: '2023-07-02T17:11:31.195Z',
+    otherRequest: 'ok 123',
+    paymentMethod: 'transfer',
+    userEmail: 'quang1@test.com',
+    tourId: 3,
+  },
+]
+
+export default offlineOrders
